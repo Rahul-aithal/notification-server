@@ -1,0 +1,32 @@
+version: '3.8'
+
+networks:
+  notification_sys_network:
+    driver: bridge
+
+services:
+  rabbitMQ:
+    image: rabbitmq:4.0-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    env_file:
+      - .env
+    networks:
+      - notification_sys_network
+
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      - rabbitMQ
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - notification_sys_network
+

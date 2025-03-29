@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POST Request Example</title>
+</head>
+<body>
+    <h1>Send POST Request</h1>
+    <button onclick="sendPostRequest()">Send Request</button>
+    <pre id="responseData"></pre>
+
+    <script>
+        function sendPostRequest() {
+            fetch('http://localhost:4000/notify_user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: 'aithalrahul34@gmail.com',
+                    username: 'rahul',
+                    message: "This is test i will says it is wokring",
+                    userId: '6774042bf2be57f899ae17fa'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('responseData').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('responseData').textContent = 'Error: ' + JSON.stringify(error, null, 2);
+            });
+        }
+    </script>
+</body>
+</html>
